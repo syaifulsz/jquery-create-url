@@ -1,0 +1,61 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+
+        <h1>jQuery Create Url</h1>
+        <hr>
+
+        <h2>Basic Usage</h2>
+        <p>Initiate global configurations.</p>
+        <code><pre>
+            $.UrlConfig({
+                'listings/index': 'listings/index': '&lt;make&gt;/&lt;model&gt;'
+            });
+        </pre></code>
+        <p>Create urls.</p>
+        <code><pre>
+            var url1 = $.Url('listings/index', {
+                make: 'proton',
+                model: 'saga'
+            });
+            console.log(url1); // proton/saga/
+
+            var url2 = $.Url('book/article', {
+                category: 'cooking',
+                title: 'this-is-title',
+                id: 12345678
+            });
+            console.log(url2); // category=cooking&title=this-is-title&id=12345678
+        </pre></code>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="dist/jquery.create-url.min.js"></script>
+        <script type="text/javascript">
+
+        $.UrlConfig({
+            'listings/index': '<make>/<model>'
+        });
+
+        var url1 = $.Url('listings/index', {
+            make: 'proton',
+            model: 'saga'
+        });
+        console.log(url1);
+
+        var url2 = $.Url('book/article', {
+            category: 'cooking',
+            title: 'this-is-title',
+            id: 12345678
+        });
+        console.log(url2);
+
+        </script>
+    </body>
+</html>

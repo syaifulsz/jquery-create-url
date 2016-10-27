@@ -1,0 +1,45 @@
+{
+  "name": "create-url",
+  "version": "1.0.0",
+  "description": "A jQuery plugin to create url from given route pattern",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/syaifulsz/jquery-create-url.git"
+  },
+  "keywords": [
+    "jquery",
+    "route",
+    "url",
+    "create",
+    "url",
+    "generate",
+    "url",
+    "params",
+    "to",
+    "url",
+    "friendly",
+    "url",
+    "javascript",
+    "seo",
+    "friendly",
+    "url",
+    "pretty",
+    "url"
+  ],
+  "author": "Syaiful Shah Zinan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/syaifulsz/jquery-create-url/issues"
+  },
+  "homepage": "https://github.com/syaifulsz/jquery-create-url#readme",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0"
+  }
+}
