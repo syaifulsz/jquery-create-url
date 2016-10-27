@@ -6,7 +6,7 @@ Initiate global configurations.
 
 ```javascript
 $.UrlConfig({
-    'listings/index': 'listings/index': '<make>/<model>'
+    'listings/index': '<make>/<model>'
 });
 ```
 
