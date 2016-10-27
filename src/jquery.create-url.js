@@ -1,16 +1,23 @@
 ;(function($) {
     'use strict';
 
-    var url;
-    var urlParams;
     var routeRules;
 
     $.UrlConfig = function(options) {
 
-        routeRules = {
-            'book': 'book/<category>',
-            'book/article': 'book/<category>/<title>/<id>',
-        };
+        routeRules = [
+            {
+                pattern: 'motor/<make>/<model>/<variant>',
+                route: 'listings/index',
+                defaults: {
+                    vehicle_type: 'mcycle'
+                }
+            },
+            {
+                pattern: '<make>/<model>/<variant>',
+                route: 'listings/index',
+            }
+        ];
 
         if (options) routeRules = options;
 
@@ -19,20 +26,49 @@
 
     $.Url = function(route, params) {
 
+        var ruleDefaults, rule, url;
+
         if (!route) return;
 
-        var url;
-        var urlParams;
+        function validateRuleDefaults(defaults, params) {
+            var keyChecks = 0;
+            var totalDefaults = Object.keys(defaults).length;
 
-        $.each(routeRules, function(routeKey, routeRule) {
-            if (routeKey == route) {
-                url = routeRule;
-                return;
-            }
+            $.each(params, function(key, value) {
+                if (typeof defaults[key] !== 'undefined' && defaults[key] == value) {
+                    keyChecks++;
+                }
+            });
+
+            return keyChecks == totalDefaults ? true : false;
+        }
+
+        // check routes with defaults
+        $.each(routeRules, function(i, rules) {
+            if (typeof rules.route === 'undefined') return;
+            if (typeof rules.pattern === 'undefined') return;
+            if (typeof rules.defaults === 'undefined') return;
+            if (rules.route != route) return;
+            if (!validateRuleDefaults(rules.defaults, params)) return;
+            ruleDefaults = rules;
         });
 
-        if (url) {
+        // check routes w/o defaults
+        $.each(routeRules, function(i, rules) {
+            if (typeof rules.route === 'undefined') return;
+            if (typeof rules.pattern === 'undefined') return;
+            if (typeof rules.defaults !== 'undefined') return;
+            if (rules.route != route) return;
+            rule = rules;
+        });
+
+        rule = ruleDefaults ? ruleDefaults : rule;
+
+        if (rule) {
+
             var key, _key, value;
+            url = rule.pattern;
+
             $.each(params, function(_key, value) {
                 key = '<'+ _key +'>';
                 if (key && url.indexOf(key) >= 0) {
@@ -41,8 +77,14 @@
                 }
             });
 
+            if (typeof rule.defaults !== 'undefined') {
+                $.each(rule.defaults, function(_key, value) {
+                    delete params[_key];
+                });
+            }
+
             url = url.replace(/(\/<)\w+(>)/g, '');
-            url = url + '/' + (params.length ? '?' + $.param(params) : '');
+            url = url + '/' + (Object.keys(params).length ? '?' + $.param(params) : '');
         }
 
         return url ? url : $.param(params);

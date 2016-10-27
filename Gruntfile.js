@@ -32,6 +32,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     // Tasks
-    grunt.registerTask('default', ['jslint', 'uglify']);
+    grunt.registerTask('default', ['jshint', 'uglify']);
 
 };

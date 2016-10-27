@@ -6,55 +6,187 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     </head>
     <body>
 
-        <h1>jQuery Create Url</h1>
-        <hr>
+        <div class="container">
+            <h1>jQuery Create Url</h1>
+            <hr>
 
-        <h2>Basic Usage</h2>
-        <p>Initiate global configurations.</p>
-        <code><pre>
-            $.UrlConfig({
-                'listings/index': 'listings/index': '&lt;make&gt;/&lt;model&gt;'
-            });
-        </pre></code>
-        <p>Create urls.</p>
-        <code><pre>
-            var url1 = $.Url('listings/index', {
-                make: 'proton',
-                model: 'saga'
-            });
-            console.log(url1); // proton/saga/
+            <h2>Basic Usage</h2>
+            <p>Initiate global configurations.</p>
+<pre>
+$.UrlConfig([
+    {
+        pattern: '&lt;type&gt;-cars/&lt;make&gt;/&lt;model&gt;/&lt;variant&gt;',
+        route: 'listings/index',
+        defaults: {
+            vehicle_type: 'car'
+        }
+    },
+    {
+        pattern: 'motorbike/&lt;make&gt;/&lt;model&gt;/&lt;variant&gt;',
+        route: 'listings/index',
+        defaults: {
+            vehicle_type: 'mcycle'
+        }
+    },
+    {
+        pattern: '&lt;make&gt;/&lt;model&gt;/&lt;variant&gt;',
+        route: 'listings/index',
+    }
+]);
+</pre>
+            <p>Create urls.</p>
+<pre>
+var url1 = $.Url('listings/index', {
+    make: 'proton',
+    model: 'saga',
+    variant: 'blm',
+    vehicle_type: 'mcycle',
+});
+console.log(url1);
 
-            var url2 = $.Url('book/article', {
-                category: 'cooking',
-                title: 'this-is-title',
-                id: 12345678
-            });
-            console.log(url2); // category=cooking&title=this-is-title&id=12345678
-        </pre></code>
+var url2 = $.Url('listings/index', {
+    make: 'proton',
+    model: 'saga',
+    variant: 'blm'
+});
+console.log(url2);
+
+var url3 = $.Url('book/article', {
+    category: 'cooking',
+    title: 'this-is-title',
+    id: 12345678
+});
+console.log(url3);
+</pre>
+
+            <h2>Test</h2>
+
+            <form class="js-create-url">
+
+                <div class="alert alert-success js-alert hide"></div>
+
+                <div class="js-field-container">
+                    <div class="form-group form-group__field">
+                        <div class="row">
+                            <div class="col-md-6"><input class="form-control input-lg" type="text" name="key_0" value="make"></div>
+                            <div class="col-md-6"><input class="form-control input-lg" type="text" name="value_0" value="Proton"></div>
+                        </div>
+                    </div>
+                    <div class="form-group form-group__field">
+                        <div class="row">
+                            <div class="col-md-6"><input class="form-control input-lg" type="text" name="key_1" value="model"></div>
+                            <div class="col-md-6"><input class="form-control input-lg" type="text" name="value_1" value="Saga"></div>
+                        </div>
+                    </div>
+                    <div class="form-group form-group__field">
+                        <div class="row">
+                            <div class="col-md-6"><input class="form-control input-lg" type="text" name="key_2" value="variant"></div>
+                            <div class="col-md-6"><input class="form-control input-lg" type="text" name="value_2" value="BLM"></div>
+                        </div>
+                    </div>
+                    <div class="form-group form-group__field">
+                        <div class="row">
+                            <div class="col-md-6"><input class="form-control input-lg" type="text" name="key_3" value="vehicle_type"></div>
+                            <div class="col-md-6"><input class="form-control input-lg" type="text" name="value_3" value="mcycle"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group well">
+                    <div class="row">
+                        <div class="col-md-6"><button type="button" class="btn btn-lg btn-default btn-block js-add-field">Add Field</button></div>
+                        <div class="col-md-6"><button type="submit" class="btn btn-lg btn-primary btn-block">Create URL</button></div>
+                    </div>
+                </div>
+            </form>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- <script src="src/jquery.create-url.js"></script> -->
         <script src="dist/jquery.create-url.min.js"></script>
         <script type="text/javascript">
 
-        $.UrlConfig({
-            'listings/index': '<make>/<model>'
-        });
+        $.UrlConfig([
+            {
+                pattern: '<type>-cars/<make>/<model>/<variant>',
+                route: 'listings/index',
+                defaults: {
+                    vehicle_type: 'car'
+                }
+            },
+            {
+                pattern: 'motorbike/<make>/<model>/<variant>',
+                route: 'listings/index',
+                defaults: {
+                    vehicle_type: 'mcycle'
+                }
+            },
+            {
+                pattern: '<make>/<model>/<variant>',
+                route: 'listings/index',
+            }
+        ]);
 
         var url1 = $.Url('listings/index', {
             make: 'proton',
-            model: 'saga'
+            model: 'saga',
+            variant: 'blm',
+            vehicle_type: 'mcycle',
         });
         console.log(url1);
 
-        var url2 = $.Url('book/article', {
+        var url2 = $.Url('listings/index', {
+            make: 'proton',
+            model: 'saga',
+            variant: 'blm'
+        });
+        console.log(url2);
+
+        var url3 = $.Url('book/article', {
             category: 'cooking',
             title: 'this-is-title',
             id: 12345678
         });
-        console.log(url2);
+        console.log(url3);
+
+        var $form = $('.js-create-url');
+        var $alert = $('.js-alert');
+        var $params = $('.js-params');
+        var $btnAddField = $('.js-add-field');
+        var $fieldContainer = $('.js-field-container');
+
+        $btnAddField.on('click', function(e) {
+            var totalFields = $form.find('.form-group__field').length;
+            var html = '<div class="form-group form-group__field">' +
+                '<div class="row">' +
+                    '<div class="col-md-6"><input class="form-control input-lg" type="text" name="key_'+ totalFields +'" placeholder="Your key"></div>' +
+                    '<div class="col-md-6"><input class="form-control input-lg" type="text" name="value_'+ totalFields +'" placeholder="Your value"></div>' +
+                '</div>' +
+            '</div>';
+
+            $fieldContainer.append(html);
+        });
+
+        $form.on('submit', function(e) {
+            e.preventDefault();
+
+            $alert.addClass('hide');
+
+            var params = {};
+            var $this = $(this);
+
+            for (i = 0; i < $this.find('.form-group__field').length; i++) {
+                var key = $this.find('[name="key_'+ i +'"]').val();
+                var value = $this.find('[name="value_'+ i +'"]').val();
+                params[key] = value;
+            }
+
+            $alert.removeClass('hide').html($.Url('listings/index', params));
+        });
 
         </script>
     </body>
