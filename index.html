@@ -129,20 +129,25 @@ console.log(url3);
                 pattern: '<make>/<model>/<variant>',
                 route: 'listings/index',
             }
-        ]);
+        ], {
+            make: 'slugify',
+            model: 'slugify',
+            variant: 'slugify',
+            vehicle_type: 'slugify'
+        });
 
         var url1 = $.Url('listings/index', {
-            make: 'proton',
-            model: 'saga',
-            variant: 'blm',
+            make: 'Proton',
+            model: 'Saga',
+            variant: 'BLM',
             vehicle_type: 'mcycle',
         });
         console.log(url1);
 
         var url2 = $.Url('listings/index', {
-            make: 'proton',
-            model: 'saga',
-            variant: 'blm'
+            make: 'Proton',
+            model: 'Saga',
+            variant: 'BLM'
         });
         console.log(url2);
 

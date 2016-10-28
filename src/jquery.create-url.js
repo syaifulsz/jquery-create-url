@@ -2,8 +2,19 @@
     'use strict';
 
     var routeRules;
+    var paramRules;
+    var slugify;
 
-    $.UrlConfig = function(options) {
+    window.slugify = function(str) {
+        var $slug = '';
+        var trimmed = $.trim(str);
+        $slug = trimmed.replace(/[^a-z0-9-]/gi, '-').
+        replace(/-+/g, '-').
+        replace(/^-|-$/g, '');
+        return $slug.toLowerCase();
+    };
+
+    $.UrlConfig = function(routeRulesOptions, paramRulesOptions) {
 
         routeRules = [
             {
@@ -19,9 +30,18 @@
             }
         ];
 
-        if (options) routeRules = options;
+        paramRules = {
+            make: 'slugify',
+            model: 'slugify'
+        };
 
-        return routeRules;
+        if (routeRulesOptions) routeRules = routeRulesOptions;
+        if (paramRulesOptions) paramRules = paramRulesOptions;
+
+        return [
+            routeRules = routeRules,
+            paramRules = paramRules
+        ];
     };
 
     $.Url = function(route, params) {
@@ -72,6 +92,12 @@
             $.each(params, function(_key, value) {
                 key = '<'+ _key +'>';
                 if (key && url.indexOf(key) >= 0) {
+
+                    if (typeof paramRules[_key] !== 'undefined' && paramRules[_key]) {
+                        var fn = window[paramRules[_key]];
+                        if (typeof fn === "function") value = fn(value);
+                    }
+
                     url = url.replace(key, value);
                     delete params[_key];
                 }
